@@ -78,7 +78,10 @@ void LinkedList<T>::Remove(unsigned long long index) {
     }
 
     if(index == 0) {
+        LinkedListNode<T>* currentHead = head;
         head = head->next;
+
+        delete currentHead;
     } else {
         LinkedListNode<T>* previousNode = head;
         unsigned long long previousNodeIndex = 0;
@@ -88,7 +91,10 @@ void LinkedList<T>::Remove(unsigned long long index) {
             ++previousNodeIndex;
         }
 
+        LinkedListNode<T>* nodeToDelete = previousNode->next;
         previousNode->next = previousNode->next->next;
+
+        delete nodeToDelete;
     }
 
     --length;

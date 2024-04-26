@@ -11,4 +11,6 @@ add_executable(CPP_DSA
         headers/LinkedList.h
         src/Stack.cpp
         headers/Stack.h
+        src/Queue.cpp
+        headers/Queue.h
 )

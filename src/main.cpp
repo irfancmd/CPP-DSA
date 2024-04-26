@@ -2,11 +2,14 @@
 
 #include <LinkedList.h>
 #include <Stack.h>
+#include <Queue.h>
 
 // To avoid linker error with generics.
 // See: https://www.codeproject.com/Articles/48575/How-to-Define-a-Template-Class-in-a-h-File-and-Imp
 #include "./LinkedList.cpp"
 #include "./Stack.cpp"
+#include "./Queue.cpp"
+
 
 int main() {
     std::cout << "HELLO\n";
@@ -39,6 +42,16 @@ int main() {
     std::cout<< stack.Pop() << "\n";
     std::cout<< stack.Peek() << "\n";
     std::cout<< stack.Pop() << "\n";
+
+//    Queue<int> queue {};
+//
+//    queue.Enqueue(2);
+//    queue.Enqueue(4);
+//    queue.Enqueue(6);
+//
+//    std::cout << queue.Dequeue() << "\n";
+//    std::cout << queue.Dequeue() << "\n";
+//    std::cout << queue.Dequeue() << "\n";
 
     return 0;
 }

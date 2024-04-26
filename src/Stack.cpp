@@ -28,13 +28,13 @@ template<typename T>
 void Stack<T>::Push(T element) {
     if (top == nullptr) {
         top = new StackNode<T>(element);
-        ++height;
     } else {
         StackNode<T>* temp = top;
 
         top = new StackNode<T>(element, temp);
-        ++height;
     }
+
+    ++height;
 }
 
 template<typename T>
@@ -43,9 +43,11 @@ T Stack<T>::Pop() {
         throw StackUnderflowException();
     }
 
-    T value = top->value;
+    StackNode<T>* topNode = top;
+    T value = topNode->value;
 
     top = top->bottom;
+    delete topNode;
     --height;
 
     return value;

@@ -56,16 +56,12 @@ T Queue<T>::Dequeue() {
 
         return val;
     } else {
-        QueueNode<T>* secondLastItem = first;
+        QueueNode<T>* firstNode = first;
+        T val = firstNode->value;
 
-        while(secondLastItem->next->next != nullptr) {
-            secondLastItem = secondLastItem->next;
-        }
+        this->first = first->next;
 
-        T val = secondLastItem->next->value;
-
-        delete secondLastItem->next;
-        secondLastItem->next = nullptr;
+        delete firstNode;
         --length;
 
         return val;

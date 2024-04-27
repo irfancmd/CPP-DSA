@@ -25,7 +25,11 @@ public:
     void Insert(T element, unsigned long long index);
     void Remove(unsigned long long index);
     T Get(unsigned long long index);
+    T GetMidPoint() const;
+    LinkedListNode<T>* Reverse(LinkedListNode<T>* currentHead);
+    LinkedListNode<T>* ReverseIterative(LinkedListNode<T>* currentHead);
     void Print() const;
+    static LinkedList<T>* MergeSortedLinkedLists(const LinkedList<T>& list1, const LinkedList<T>& list2);
 
     LinkedListNode<T>* head;
     unsigned long long length;

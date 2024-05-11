@@ -6,6 +6,8 @@
 #define CPP_DSA_STACK_H
 
 
+#include <string>
+
 template<typename T>
 class StackNode {
 public:
@@ -23,6 +25,7 @@ public:
     void Push(T element);
     T Pop();
     T Peek() const;
+    static bool IsExpressionBalanced(std::string& equation);
 
     StackNode<T>* top;
     unsigned long long height;

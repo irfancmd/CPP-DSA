@@ -61,3 +61,32 @@ T Stack<T>::Peek() const{
 
     return top->value;
 }
+
+// Generic is not really needed here, but still we have to put it.
+template<typename T>
+bool Stack<T>::IsExpressionBalanced(std::string &equation) {
+    Stack<char> stack;
+
+    for(char c : equation) {
+        if(c == '(' || c == '{' || c == '[') {
+            // If we get an opening bracket, push it to the stack
+            stack.Push(c);
+        } else if (c == ')' || c == '}' || c == ']') {
+            // If we get an opening bracket, pop the top item and
+            // check if it actually is the opening bracket for the current
+            // closing bracket.
+            char openingBracket = stack.Pop();
+
+            if((c == ')' && openingBracket == '(') || (c == '}' && openingBracket == '{') || (c == ']' && openingBracket == '['))
+            {
+                continue;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    // After iterating through the equation string, we have to check if our stack is empty or not.
+    // For a balanced equation, the stack should be empty.
+    return stack.height == 0;
+}

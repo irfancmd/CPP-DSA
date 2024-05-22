@@ -4,6 +4,7 @@
 #include <Stack.h>
 #include <Queue.h>
 #include <TreeNode.h>
+#include <BinaryTreeNode.h>
 
 // To avoid linker error with generics.
 // See: https://www.codeproject.com/Articles/48575/How-to-Define-a-Template-Class-in-a-h-File-and-Imp
@@ -11,6 +12,7 @@
 #include "./Stack.cpp"
 #include "./Queue.cpp"
 #include "./TreeNode.cpp"
+#include "./BinaryTreeNode.cpp"
 
 
 int main() {
@@ -101,30 +103,64 @@ int main() {
 //        std::cout << "The expression is not balanced.\n";
 //    }
 
-    auto* root = new TreeNode<int> { 10 };
-    auto* n1 = new TreeNode<int> { 20 };
-    auto* n2 = new TreeNode<int> { 30 };
+//    auto* root = new TreeNode<int> { 10 };
+//    auto* n1 = new TreeNode<int> { 20 };
+//    auto* n2 = new TreeNode<int> { 30 };
+//
+//    root->children->push_back(n1);
+//    root->children->push_back(n2);
+//
+////    TreeNode<int>::PrintTree(root);
+//    TreeNode<int>::PrintLevelWise(root);
+//
+//    std::cout << "Number of nodes in the tree: " << TreeNode<int>::CountNumberOfNodes(root) << "\n";
+//
+//    std::cout << "Height the tree: " << TreeNode<int>::GetHeight(root) << "\n";
+//
+//    TreeNode<int>::PrintNodeAtDepth(root, 1);
+//    std::cout << "\n";
+//
+//    std::cout << "Number of leaves in the tree: " << TreeNode<int>::CountLeaves(root) << "\n";
+//
+//    TreeNode<int>::PrintPreOrder(root);
+//    std::cout << "\n";
+//
+//    TreeNode<int>::PrintPostOrder(root);
+//    std::cout << "\n";
 
-    root->children->push_back(n1);
-    root->children->push_back(n2);
+//    auto tn1 = new BinaryTreeNode<int>(10);
+//    auto tn2 = new BinaryTreeNode<int>(15);
+//    auto tn3 = new BinaryTreeNode<int>(20);
+//
+//    tn1->left = tn2;
+//    tn1->right = tn3;
+//
+//    auto tn4 = new BinaryTreeNode<int>(25);
+//
+//    tn3->left = tn4;
+//
+//    std::cout << "Number of nodes in the binary tree: " << BinaryTreeNode<int>::CountNodes(tn1) << "\n";
+//
+//    BinaryTreeNode<int>::PrintInOrder(tn1);
+//
+//    std::cout << "\n";
 
-//    TreeNode<int>::PrintTree(root);
-    TreeNode<int>::PrintLevelWise(root);
+//    int inOrder[] = { 4, 2, 5, 1, 8, 6, 9, 3, 7 };
+//    int preOrder[] = { 1, 2, 4, 5, 3, 6, 8, 9, 7 };
+//
+//    BinaryTreeNode<int>* root = BinaryTreeNode<int>::BuildTreeFromPreAndInOrder(inOrder, preOrder, 9);
+//
+//    // We can match it to the inOrder input to verify if the tree building is correct
+//    BinaryTreeNode<int>::PrintInOrder(root);
 
-    std::cout << "Number of nodes in the tree: " << TreeNode<int>::CountNumberOfNodes(root) << "\n";
+     auto root = new BinaryTreeNode<int> { 1 };
+     root->left = new BinaryTreeNode<int> { 2 };
+     root->right = new BinaryTreeNode<int> { 3 };
 
-    std::cout << "Height the tree: " << TreeNode<int>::GetHeight(root) << "\n";
+     std::pair<size_t, size_t> heightAndDiameter = BinaryTreeNode<int>::GetHeightAndDiameter(root);
 
-    TreeNode<int>::PrintNodeAtDepth(root, 1);
-    std::cout << "\n";
-
-    std::cout << "Number of leaves in the tree: " << TreeNode<int>::CountLeaves(root) << "\n";
-
-    TreeNode<int>::PrintPreOrder(root);
-    std::cout << "\n";
-
-    TreeNode<int>::PrintPostOrder(root);
-    std::cout << "\n";
+     std::cout << "Height: " << heightAndDiameter.first << "\n";
+     std::cout << "Diameter: " << heightAndDiameter.second << "\n";
 
     return 0;
 }

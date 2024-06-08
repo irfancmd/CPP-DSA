@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <climits>
+
 #include "BinaryTreeNode.h"
 
 template<typename T>
@@ -134,4 +136,158 @@ std::pair<size_t, size_t> BinaryTreeNode<T>::GetHeightAndDiameter(BinaryTreeNode
     p.second = diameter;
 
     return p;
+}
+
+// ***** Binary Search Tree *****
+
+template<typename T>
+BinaryTreeNode<T>* BinaryTreeNode<T>::FindOnBinarySearchTree(BinaryTreeNode<T> *root, T valueToSearch) {
+    if(root == nullptr) {
+        return nullptr;
+    }
+
+    if(root->value == valueToSearch) {
+        return root;
+    } else if (valueToSearch < root->value) {
+       return FindOnBinarySearchTree(root->left, valueToSearch);
+    } else {
+        return FindOnBinarySearchTree(root->right, valueToSearch);
+    }
+}
+
+template<typename T>
+void BinaryTreeNode<T>::PrintWithinRange(BinaryTreeNode<T> *root, T start, T end) {
+   if(root == nullptr) {
+       return;
+   }
+
+   if(root->value >= start && root->value <= end) {
+      std::cout << root->value << " ";
+
+      BinaryTreeNode<T>::PrintWithinRange(root->left, start, end);
+      BinaryTreeNode<T>::PrintWithinRange(root->right, start, end);
+   } else if (root->value > end) {
+       BinaryTreeNode<T>::PrintWithinRange(root->left, start, end);
+   } else if (root->value < start) {
+       BinaryTreeNode<T>::PrintWithinRange(root->right, start, end);
+   }
+}
+
+template<typename T>
+int BinaryTreeNode<T>::GetMinimum(BinaryTreeNode<int> *root) {
+    if(root == nullptr) {
+        return INT_MAX;
+    }
+
+    return std::min(root->value, std::min(BinaryTreeNode<int>::GetMinimum(root->left), BinaryTreeNode<int>::GetMinimum(root->right)));
+}
+
+template<typename T>
+int BinaryTreeNode<T>::GetMaximum(BinaryTreeNode<int> *root) {
+    if(root == nullptr) {
+        return INT_MIN;
+    }
+
+    return std::max(root->value, std::max(BinaryTreeNode<int>::GetMaximum(root->left), BinaryTreeNode<int>::GetMaximum(root->right)));
+}
+
+template<typename T>
+bool BinaryTreeNode<T>::IsBST(BinaryTreeNode<int> *root) {
+    if(root == nullptr) {
+        return true;
+    }
+
+    int leftMax = BinaryTreeNode<int>::GetMaximum(root->left);
+    int rightMin = BinaryTreeNode<int>::GetMinimum(root->right);
+
+    bool output = (root->value > leftMax) && (root->value <= rightMin) && BinaryTreeNode<int>::IsBST(root->left) && BinaryTreeNode<int>::IsBST(root->right);
+
+    return output;
+}
+
+template<typename T>
+Triplet<bool, int, int> BinaryTreeNode<T>::IsBSTOptimized(BinaryTreeNode<int> *root) {
+    if(root == nullptr) {
+        // First: IsBST, Second: Minimum, Third: Maximum
+        return Triplet { true, INT_MAX, INT_MIN };
+    }
+
+    Triplet<bool, int, int> leftOutput = BinaryTreeNode<T>::IsBSTOptimized(root->left);
+    Triplet<bool, int, int> rightOutput = BinaryTreeNode<T>::IsBSTOptimized(root->right);
+
+    int minimum = std::min(root->value, std::min(leftOutput.second, rightOutput.second));
+    int maximum = std::max(root->value, std::max(leftOutput.third, rightOutput.third));
+
+    bool isBstFinal = (root->value > leftOutput.third)
+            && (root->value <= rightOutput.second)
+            && leftOutput.first
+            && rightOutput.first;
+
+    return Triplet { isBstFinal, minimum, maximum };
+}
+
+template<typename T>
+bool BinaryTreeNode<T>::IsBstOptimized2(BinaryTreeNode<int> *root, int min, int max) {
+    if(root == nullptr) {
+        return true;
+    }
+
+    if(root->value < min && root->value > max) {
+        return false;
+    }
+
+    bool isLeftOk = BinaryTreeNode<T>::IsBstOptimized2(root->left, min, root->value - 1);
+    bool isRightOk = BinaryTreeNode<T>::IsBstOptimized2(root->right, root->value, max);
+
+    return isLeftOk && isRightOk;
+}
+
+template<typename T>
+BinaryTreeNode<int>* BinaryTreeNode<T>::MakeBstFromSortedArray(int *arr, int start, int end) {
+    if(start > end) {
+        return nullptr;
+    }
+
+    if(start == end) {
+        return new BinaryTreeNode<int> { arr[start] };
+    }
+
+    int partitionLength = (end - start) + 1;
+
+    int midIndex = start + (partitionLength / 2);
+
+    BinaryTreeNode<int>* node = new BinaryTreeNode<int> { arr[midIndex] };
+
+    node->left = BinaryTreeNode<T>::MakeBstFromSortedArray(arr, start, midIndex - 1);
+    node->right = BinaryTreeNode<T>::MakeBstFromSortedArray(arr, midIndex + 1, end);
+
+    return node;
+}
+
+template<typename T>
+std::pair<LinkedListNode<T>*, LinkedListNode<T>*> BinaryTreeNode<T>::BstToLinkedList(BinaryTreeNode<T> *root) {
+    if (root == nullptr) {
+        return std::make_pair(nullptr, nullptr);
+    }
+
+    LinkedListNode<T>* current = new LinkedListNode<T> { root->value };
+
+    std::pair<LinkedListNode<T>*, LinkedListNode<T>*> leftResult = BinaryTreeNode<T>::BstToLinkedList(root->left);
+    if(leftResult.second != nullptr) {
+        leftResult.second->next = current;
+    }
+
+    std::pair<LinkedListNode<T>*, LinkedListNode<T>*> rightResult = BinaryTreeNode<T>::BstToLinkedList(root->right);
+    current->next = rightResult.first;
+
+    if(leftResult.first != nullptr && rightResult.second != nullptr) {
+        return std::make_pair(leftResult.first, rightResult.second);
+    } else if(leftResult.first == nullptr && rightResult.second != nullptr) {
+        return std::make_pair(current, rightResult.second);
+    } else if(leftResult.first != nullptr && rightResult.second == nullptr) {
+        return std::make_pair(leftResult.first, current);
+    } else {
+        // Both leftResult's head and rightResult's tail is null
+        return std::make_pair(current, current);
+    }
 }

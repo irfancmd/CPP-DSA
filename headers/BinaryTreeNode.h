@@ -6,6 +6,10 @@
 #define CPP_DSA_BINARYTREENODE_H
 
 #include <cstddef>
+#include <climits>
+
+#include "Triplet.h"
+#include "LinkedList.h"
 
 template<typename T>
 class BinaryTreeNode {
@@ -20,6 +24,16 @@ public:
     static size_t GetTreeDiameter(BinaryTreeNode<T>* root);
     // Helper function for diameter calculation that avoids calculating height repeatedly.
     static std::pair<size_t, size_t> GetHeightAndDiameter(BinaryTreeNode<T>* root);
+    // ***** Binary Search Tree *****
+    static BinaryTreeNode<T>* FindOnBinarySearchTree(BinaryTreeNode<T>* root, T valueToSearch);
+    static void PrintWithinRange(BinaryTreeNode<T>* root, T start, T end);
+    static bool IsBST(BinaryTreeNode<int>* root);
+    static int GetMinimum(BinaryTreeNode<int>* root);
+    static int GetMaximum(BinaryTreeNode<int>* root);
+    static Triplet<bool, int, int> IsBSTOptimized(BinaryTreeNode<int>* root);
+    static bool IsBstOptimized2(BinaryTreeNode<int>* root, int min = INT_MIN, int max = INT_MAX);
+    static BinaryTreeNode<int>* MakeBstFromSortedArray(int* arr, int start, int end);
+    static std::pair<LinkedListNode<T>*, LinkedListNode<T>*> BstToLinkedList(BinaryTreeNode<T>* root);
 
     T value;
     BinaryTreeNode<T>* left;

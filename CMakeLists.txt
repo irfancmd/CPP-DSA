@@ -18,4 +18,5 @@ add_executable(CPP_DSA
         src/BinaryTreeNode.cpp
         headers/BinaryTreeNode.h
         src/BinaryTreeNode.cpp
+        headers/Triplet.h
 )

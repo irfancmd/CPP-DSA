@@ -153,14 +153,60 @@ int main() {
 //    // We can match it to the inOrder input to verify if the tree building is correct
 //    BinaryTreeNode<int>::PrintInOrder(root);
 
-     auto root = new BinaryTreeNode<int> { 1 };
-     root->left = new BinaryTreeNode<int> { 2 };
-     root->right = new BinaryTreeNode<int> { 3 };
+//     auto root = new BinaryTreeNode<int> { 1 };
+//     root->left = new BinaryTreeNode<int> { 2 };
+//     root->right = new BinaryTreeNode<int> { 3 };
+//
+//     std::pair<size_t, size_t> heightAndDiameter = BinaryTreeNode<int>::GetHeightAndDiameter(root);
+//
+//     std::cout << "Height: " << heightAndDiameter.first << "\n";
+//     std::cout << "Diameter: " << heightAndDiameter.second << "\n";
 
-     std::pair<size_t, size_t> heightAndDiameter = BinaryTreeNode<int>::GetHeightAndDiameter(root);
+    auto root = new BinaryTreeNode<int> { 5 };
+    root->left = new BinaryTreeNode<int> { 3 };
+    root->left->left = new BinaryTreeNode<int> { 2 };
+    root->left->right = new BinaryTreeNode<int> { 4 };
+    root->right = new BinaryTreeNode<int> { 7 };
+    root->right->left = new BinaryTreeNode<int> { 6 };
+    root->right->right = new BinaryTreeNode<int> { 8 };
 
-     std::cout << "Height: " << heightAndDiameter.first << "\n";
-     std::cout << "Diameter: " << heightAndDiameter.second << "\n";
+//        auto node = BinaryTreeNode<int>::FindOnBinarySearchTree(root, 2);
+//        std::cout << node->value << "\n";
+
+//    BinaryTreeNode<int>::PrintWithinRange(root, 3, 7);
+//    std::cout << "\n";
+
+//    std::cout << BinaryTreeNode<int>::IsBST(root) << "\n";
+//    std::cout << BinaryTreeNode<int>::IsBSTOptimized(root).first << "\n";
+
+//    std::cout << BinaryTreeNode<int>::IsBstOptimized2(root) << "\n";
+
+//    int sortedArr[] = { 1, 2, 3, 4, 5, 6, 7, 8};
+//
+//    BinaryTreeNode<int>* constructedRoot = BinaryTreeNode<int>::MakeBstFromSortedArray(sortedArr, 0, 7);
+//
+//    BinaryTreeNode<int>::PrintInOrder(constructedRoot);
+//
+//    bool isOptimized = BinaryTreeNode<int>::IsBstOptimized2(constructedRoot);
+//
+//    std::cout << "\n";
+//
+//    std::cout << isOptimized << "\n";
+
+    auto linkedListInfo = BinaryTreeNode<int>::BstToLinkedList(root);
+
+    LinkedListNode<int>* head = linkedListInfo.first;
+
+    if(head == nullptr) {
+        std::cout << "NULL\n";
+    }
+
+    while(head != nullptr) {
+        std::cout << head->value << " ";
+        head = head->next;
+    }
+
+    std::cout << "\n";
 
     return 0;
 }
